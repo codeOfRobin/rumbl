@@ -8,4 +8,8 @@ defmodule Rumbl.User do
     field(:password_hash, :string)
     timestamps
   end
+
+  def changeset(user, params \\ %{}) do
+    cast(user, params, [:name])
+  end
 end
