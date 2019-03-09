@@ -21,14 +21,19 @@ defmodule Rumbl.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    # IO.puts("params passed in: #{user_params}")
+    IO.inspect(user_params)
 
     changeset = User.changeset(%User{}, user_params)
-    {:ok, user} = Repo.insert(changeset)
 
-    conn
-    |> put_flash(:info, "#{user.name} created")
-    |> redirect(to: user_path(conn, :index))
+    case Repo.insert(changeset) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "#{user.name} created")
+        |> redirect(to: user_path(conn, :index))
+
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
   end
 
   def show(conn, %{"id" => id}) do

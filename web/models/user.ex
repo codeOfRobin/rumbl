@@ -6,10 +6,10 @@ defmodule Rumbl.User do
     field(:username, :string)
     field(:password, :string, virtual: true)
     field(:password_hash, :string)
-    timestamps
+    timestamps()
   end
 
   def changeset(user, params \\ %{}) do
-    cast(user, params, [:name])
+    cast(user, params, [:name, :username])
   end
 end
