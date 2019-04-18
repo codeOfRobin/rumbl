@@ -9,12 +9,6 @@ defmodule Rumbl.UserController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def changeset(model, params \\ :empty) do
-    model
-    |> cast(params, ~w(name, username), [])
-    |> validate_length(:username, min: 1, max: 20)
-  end
-
   def index(conn, _params) do
     users = Repo.all(Rumbl.User)
     render(conn, "index.html", users: users)
